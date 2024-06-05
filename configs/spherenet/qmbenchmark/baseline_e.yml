@@ -1,0 +1,59 @@
+seed: 233
+log_dir: "./logs/spherenet_qmbenchmark/baseline_e/"
+print_freq: 500 # steps
+
+config_file: null
+init_file: null
+
+task:
+    dataset: qm_benchmark
+    data_root: "/root/proj/database/qm_benchmark"
+    standardize: true
+    regress_force: false
+
+model:
+    model_name: "spherenet"
+    num_layers: 6
+    hidden_channels: 128
+    num_basis: 128 # used for dist angle torsion
+    radius: 5.0
+    int_emb_size: 64 # Embedding size used for interaction triplets
+    num_spherical: 7
+    num_radial: 6
+    envelope_exponent: 5
+    basis_emb_size_dist: 16
+    basis_emb_size_angle: 16
+    basis_emb_size_torsion: 16
+    out_emb_channels: 256
+
+dataloader:
+    batch_size: 256 #
+    eval_batch_size: 128 # for test
+    num_workers: 8
+    pin_memory: True
+
+optim:
+    optimizer: AdamW
+    optimizer_params:
+        weight_decay: 1.0e-4
+    lr_initial: 8.0e-4
+    scheduler: LambdaLR # lr_scheduler必备
+    scheduler_params: # lr_scheduler必备
+        lambda_type: cosine
+        warmup_factor: 0.2
+        warmup_epochs: 0.01 #
+        lr_min_factor: 0.01
+
+    max_epochs: 300
+    energy_coefficient: 1
+    force_coefficient: 10
+
+    loss_energy: mae
+    loss_force: mae
+
+    ema: False
+    ema_decay: 0.999
+
+    eval_every: 5000
+    eval_energy: 0 # 计算metric时的系数，仅当with force时生效
+    eval_force: 1
