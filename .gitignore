@@ -1,0 +1,4 @@
+.vscode
+download/raw/*
+download/processed/*
+__pycache__

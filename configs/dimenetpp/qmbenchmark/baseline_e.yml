@@ -1,0 +1,22 @@
+seed: 377
+log_dir: "logs/dimenetpp_qmbenchmark/baseline_e/"
+
+task:
+    dataset: qm_benchmark
+    data_root: "/root/proj/database/qm_benchmark"
+    standardize: true
+    regress_force: false
+
+dataloader:
+    batch_size: 256
+    num_workers: 8
+    pin_memory: True
+
+optim:
+    lr_initial: 0.0008
+    max_epochs: 500
+    force_coefficient: 20
+    energy_coefficient: 1
+    loss_energy: mae
+    loss_force: mae
+    clip_grad_norm: 10
