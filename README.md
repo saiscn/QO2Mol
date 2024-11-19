@@ -8,7 +8,10 @@ This repository contains the scripts for accessing QO2Mol dataset, the large-sca
 
 Data files can be accessed at: [Google Drive](https://drive.google.com/drive/folders/1-4FrnNrVBlL2RaBuXpalgNCk1q79VHtc?usp=drive_link)
 
-Steps:
+Note that the latest version now is `v1.1.0`.  
+See details in `CHANGELOG.md`.
+
+# Preparation
 - git clone this repo.
 - download and put all `*.pkl` files under `./download/raw/` directory.
 
@@ -27,10 +30,16 @@ Make sure current work directory is under the repository root
 Then run the data processing script. This should take a relatively long time (depending on Machine hardware specifications).
 > sh process_data.sh
 
+Take a cup of coffee☕️. This could take tens of minutes.
+
 # Usage demo
+
+Make sure current work directory is under the repository root
+>pwd
 
 We provide a usage demo that simply requires running the script
 >sh scripts\dimenetpp\qm_benchmark\tr_baseline_e.sh
+
 
 # License
 

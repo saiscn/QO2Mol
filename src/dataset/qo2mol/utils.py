@@ -40,10 +40,10 @@ def _read_moldata_file(filepath):
     return mol_datas
 
 
-def read_moldata_file(filepath):
-    if isinstance(filepath, (str, Path)):
-        filepaths = [filepath]
-    assert isinstance(filepath, (list, tuple))
+def read_moldata_file(filepaths):
+    if isinstance(filepaths, (str, Path)):
+        filepaths = [filepaths]
+    assert isinstance(filepaths, (list, tuple))
     datas = [_read_moldata_file(fp) for fp in filepaths]
     num_per_file = [len(ds) for ds in datas]
     datas = sum(datas, [])

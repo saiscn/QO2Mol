@@ -1,3 +1,4 @@
+import sys
 import copy
 import glob
 import pickle
@@ -14,8 +15,12 @@ from torch_geometric.data import Data, InMemoryDataset
 from torch_geometric.data.separate import separate
 from tqdm import tqdm, trange
 
-from .utils import read_moldata_file, convert_std_input, Timer
-from .datasetbase import BaseQMDataset
+proj_root = Path(__file__).resolve().parent.parent.parent.parent
+sys.path.insert(0, str(proj_root))
+
+from src.dataset.qo2mol.utils import read_moldata_file, convert_std_input, Timer
+from src.dataset.qo2mol.datasetbase import BaseQMDataset
+
 
 mp_atomNumber2Idx = {1: 0, 6: 1, 7: 2, 8: 3, 9: 4, 15: 5, 16: 6, 17: 7, 35: 8, 53: 9}
 REF_ENERGIES = [
@@ -30,6 +35,14 @@ REF_ENERGIES = [
     -1615128.7577386901,
     -186866.01419930425,
 ]
+
+
+def assert_exists(fpaths):
+    if not isinstance(fpaths, (list, tuple)):
+        fpaths = [fpaths]
+
+    for fp in fpaths:
+        assert Path(fp).exists(), f"{fp} not exists"
 
 
 class QO2MolDataset(BaseQMDataset):
@@ -66,25 +79,29 @@ class QO2MolDataset(BaseQMDataset):
         elif self.scope == "b":
             return self.processed_file_names[1]
 
-    def process(self):
+    def _process(self):
 
         main_file_paths = [self.raw_dir / fn for fn in self.main_file_names]
         set_b_file = self.raw_dir / self.other_file_names[0]
+        assert_exists(main_file_paths)
+        assert_exists(set_b_file)
 
         # we offer a reference energy table for quick start of usage.
         # you can still employ your own referency energies.
-        self._process(main_file_paths, self.processed_paths[0], REF_ENERGIES, True)
-        self._process(set_b_file, self.processed_paths[1], REF_ENERGIES)
+        self._process_files(main_file_paths, self.processed_paths[0], REF_ENERGIES)
+        self._process_files(set_b_file, self.processed_paths[1], REF_ENERGIES)
 
-    def _process(self, file_paths, processed_fp, reference_energies):
+    def _process_files(self, file_paths, processed_fp, reference_energies):
         with Timer("1. Reading mol files..."):
             input_datas, num_per_file = read_moldata_file(file_paths)
 
         with Timer("2. Converting to tensor..."):
             data_list = convert_std_input(input_datas, mp_atomNumber2Idx, reference_energies)
+            del input_datas
 
         with Timer("3. Collating datas..."):
             data, slices = torch_geometric.data.InMemoryDataset.collate(data_list)
+            del data_list
 
         data_dict = {"data": data, "slices": slices}
 
@@ -93,7 +110,7 @@ class QO2MolDataset(BaseQMDataset):
 
 
 if __name__ == "__main__":
-    proj_root = Path(__file__).resolve().parent.parent.parent.parent
+
     root_dir = proj_root / "download"
     print(f"data root: {root_dir}")
     dataset = QO2MolDataset(root=root_dir)
