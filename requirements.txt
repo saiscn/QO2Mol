@@ -1,10 +1,8 @@
-tqdm==4.64.1
-networkx==2.8.4
-numpy==1.23.5
-scipy==1.10.1
-pandas==2.0.2
-rdkit==2023.9.5
-scikit-learn==1.2.1
+tqdm==4.66.5
+numpy==2.1.1
+scipy==1.14.1
+pandas==2.2.3
+scikit-learn==1.5.2
 torch==2.2.2
 torch-cluster==1.6.3
 torch-geometric==2.3.1
