@@ -13,7 +13,7 @@ See details in `CHANGELOG.md`.
 
 # Preparation
 - git clone this repo.
-- download and put all `*.pkl` files under `./download/raw/` directory.
+- download and put all `*.pkl` files under `./download/raw/` directory. 
 
 
 # Environment Preparation
@@ -31,6 +31,15 @@ Then run the data processing script. This should take a relatively long time (de
 > sh process_data.sh
 
 Take a cup of coffee☕️. This could take tens of minutes.
+
+**Q&A**:
+
+- python verision `>=3.10.0` is expected. 
+- If the repo is cloned into `/abc/QO2Mol`,  all `.pkl` files should be under `/abc/QO2Mol/download/raw/`.
+- We offer MD5 hash values in `CHANGELOG.md` for download check.
+- If `sh process_data.sh` cannot locate `qo2mol.py`, try absolute path with command `python /abc/QO2Mol/src/dataset/qo2mol/qo2mol.py`.
+- Mac OS may have unexpected issues associated with the file system, Linux is strongly recommended.
+
 
 # Usage demo
 
