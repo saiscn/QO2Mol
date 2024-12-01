@@ -1,6 +1,6 @@
 # QO2Mol Dataset
 
-<img alt="" src="https://img.shields.io/badge/license-CC_BY--NC--SA_4.0-blue" style="max-width: 100%;"> <img alt="" src="https://img.shields.io/badge/python->=3.10.0-blue" style="max-width: 100%;">
+<img alt="" src="https://img.shields.io/badge/license-CC_BY--NC--SA_4.0-blue" style="max-width: 100%;"> <img alt="" src="https://img.shields.io/badge/python->=3.11.0-blue" style="max-width: 100%;">
 
 This repository contains the scripts for accessing QO2Mol dataset, the large-scale quantum chemistry dataset with 20 million conformers, designed for the research in molecular sciences under an open-source license.
 
@@ -34,7 +34,7 @@ Take a cup of coffee☕️. This could take tens of minutes.
 
 **Q&A**:
 
-- python verision `>=3.10.0` is expected. 
+- All files are created and tested with `pytho==3.11.9` & `numpy==2.1.1`.
 - If the repo is cloned into `/abc/QO2Mol`,  all `.pkl` files should be under `/abc/QO2Mol/download/raw/`.
 - We offer MD5 hash values in `CHANGELOG.md` for download check.
 - If `sh process_data.sh` cannot locate `qo2mol.py`, try absolute path with command `python /abc/QO2Mol/src/dataset/qo2mol/qo2mol.py`.

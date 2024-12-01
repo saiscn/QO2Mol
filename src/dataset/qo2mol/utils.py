@@ -1,6 +1,7 @@
+import json
 import pickle
 import time
-import json
+import traceback
 from pathlib import Path
 from typing import List, Tuple, Union
 
@@ -29,14 +30,18 @@ class Timer:
 
 
 def _read_moldata_file(filepath):
-    if filepath.suffix == ".pkl":
-        mol_datas = pickle.load(open(filepath, "rb"))
-    elif filepath.suffix == ".npy":
-        mol_datas = np.load(filepath, allow_pickle=True).tolist()
-    elif filepath.suffix == ".json":
-        mol_datas = json.load(open(filepath, "r"))
-    else:
-        raise ValueError()
+    try:
+        if filepath.suffix == ".pkl":
+            mol_datas = pickle.load(open(filepath, "rb"))
+        elif filepath.suffix == ".npy":
+            mol_datas = np.load(filepath, allow_pickle=True).tolist()
+        elif filepath.suffix == ".json":
+            mol_datas = json.load(open(filepath, "r"))
+        else:
+            raise ValueError()
+    except Exception:
+        traceback.print_exc()
+        raise RuntimeError(f"Cannot load: {str(filepath)}")
     return mol_datas
 
 
