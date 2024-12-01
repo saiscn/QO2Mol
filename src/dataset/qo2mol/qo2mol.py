@@ -59,7 +59,7 @@ class QO2MolDataset(BaseQMDataset):
             self.force_reload = force_reload
             super().__init__(root)
 
-            self.data_dict = torch.load(self.data_filepath)
+            self.data_dict = torch.load(str(self.processed_dir / self.data_filepath))
             self._data, self.slices = self.data_dict["data"], self.data_dict["slices"]
             self.check_double(double=double)
 
@@ -79,6 +79,10 @@ class QO2MolDataset(BaseQMDataset):
             return self.processed_file_names[1]
 
     def _process(self):
+
+        # cache check
+        if all([Path(fp).exists() for fp in self.processed_paths]):
+            return
 
         main_file_paths = [self.raw_dir / fn for fn in self.main_file_names]
         set_b_file = self.raw_dir / self.other_file_names[0]
