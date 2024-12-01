@@ -21,7 +21,6 @@ class BaseQMDataset(InMemoryDataset):
         self.norm = None
         self.elements = None
         self.split_indices = None
-        self.processed_dir.mkdir(parents=True, exist_ok=True)
 
     def check_double(self, double):
         # data is float64 by default when processing

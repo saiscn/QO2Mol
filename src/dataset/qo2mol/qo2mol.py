@@ -1,8 +1,8 @@
-import sys
 import copy
 import glob
 import pickle
 import re
+import sys
 import time
 from pathlib import Path
 from typing import List, Tuple, Union
@@ -18,9 +18,8 @@ from tqdm import tqdm, trange
 proj_root = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(proj_root))
 
-from src.dataset.qo2mol.utils import read_moldata_file, convert_std_input, Timer
 from src.dataset.qo2mol.datasetbase import BaseQMDataset
-
+from src.dataset.qo2mol.utils import Timer, convert_std_input, read_moldata_file
 
 mp_atomNumber2Idx = {1: 0, 6: 1, 7: 2, 8: 3, 9: 4, 15: 5, 16: 6, 17: 7, 35: 8, 53: 9}
 REF_ENERGIES = [
@@ -55,7 +54,7 @@ class QO2MolDataset(BaseQMDataset):
     other_file_names = ["QO2Mol_set_b.pkl", "QO2Mol_set_c.pkl"]
 
     def __init__(self, root, scope="main", force_reload=False, double=False):
-        with Timer(f"initinalizing ...", "[Dataset]"):
+        with Timer("initinalizing ...", "[Dataset]"):
             self.scope = scope
             self.force_reload = force_reload
             super().__init__(root)
@@ -85,6 +84,7 @@ class QO2MolDataset(BaseQMDataset):
         set_b_file = self.raw_dir / self.other_file_names[0]
         assert_exists(main_file_paths)
         assert_exists(set_b_file)
+        self.processed_dir.mkdir(parents=True, exist_ok=True)
 
         # we offer a reference energy table for quick start of usage.
         # you can still employ your own referency energies.
