@@ -27,7 +27,7 @@ Note that `torch_geometric` may need to be installed separately follow the instr
 Make sure current work directory is under the repository root
 >pwd
 
-Then run the data processing script. This should take a relatively long time (depending on Machine hardware specifications).
+Then run the data processing script.
 > sh process_data.sh
 
 Take a cup of coffee☕️. This could take tens of minutes.

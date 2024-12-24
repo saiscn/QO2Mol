@@ -1,17 +1,11 @@
-"""qq:适配energy+force的前馈训练过程"""
-
 import time
+import warnings
 from contextlib import suppress
 from typing import Iterable, Optional, Sequence, Union
-import warnings
 
 import numpy as np
 import torch
 import torch_geometric
-
-# from timm.utils import accuracy
-# from torch_cluster import radius_graph
-
 from qqtools import qdist as dist_utils
 
 
@@ -206,7 +200,6 @@ def batch_forward(model, batch_data, with_force, args):
 
 
 def step_one_batch_qmcomp(model, batch_data, loss_fn, norm_factor, with_force, args, logger=None):
-    """适配dy获得force的方式"""
     # args
     energy_weight = args["optim"]["energy_coefficient"]
     force_weight = args["optim"]["force_coefficient"]

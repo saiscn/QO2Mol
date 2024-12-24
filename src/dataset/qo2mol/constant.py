@@ -1,5 +1,6 @@
-import numpy as np
 import re
+
+import numpy as np
 
 __all__ = [
     "mp_symbol2index",
