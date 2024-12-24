@@ -15,8 +15,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import logging
 from typing import Optional
 
-from . import dist_utils as distutils
 import torch
+from qqtools import qdist as distutils
 from torch import nn
 
 

@@ -2,3 +2,4 @@
 download/raw/*
 download/processed/*
 __pycache__
+logs/*

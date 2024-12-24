@@ -12,7 +12,7 @@ import torch_geometric
 # from timm.utils import accuracy
 # from torch_cluster import radius_graph
 
-from src.utils import dist_utils
+from qqtools import qdist as dist_utils
 
 
 class AverageMeter:

@@ -2,35 +2,35 @@ import argparse
 import datetime
 import gc
 import os
-import sys
-import random
-import time
-from pathlib import Path
 import pickle
+import random
+import sys
+import time
+import warnings
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import torch
-import warnings
 import yaml
 from torch_geometric.loader import DataLoader
 from torch_geometric.nn.models import DimeNetPlusPlus
 
-proj_root = str(Path(__file__).parent.parent.parent.resolve())
-sys.path.insert(0, proj_root)
+proj_root = Path(__file__).parent.parent.parent.resolve()
+sys.path.insert(0, str(proj_root))
 
-from entry.entry_utils import (
-    prepare_args,
-    prepare_train_val_dataloader,
-    prepare_test_dataloader,
-    load_loss,
-    load_optim,
-    load_lr_scheduler,
-)
 from src.dataset.load_dataset import prepare_train_dataset
+from src.entry.entry_utils import (
+    load_loss,
+    load_lr_scheduler,
+    load_optim,
+    prepare_args,
+    prepare_test_dataloader,
+    prepare_train_val_dataloader,
+)
 from src.trainer.ef_trainer import evaluate, train_one_epoch
 from src.utils import FileLogger
-from src.utils.qqtools import save_ckp, recover
+from qqtools import recover, save_ckp
 
 
 def freeze_rand(seed):
@@ -217,7 +217,7 @@ def main(args):
     """ Dataset """
     train_dataset, val_dataset, test_dataset = None, None, None
     train_loader, val_loader, test_loader = None, None, None
-    train_dataset, val_dataset, test_dataset = prepare_train_dataset(args=args, split_valid=True)
+    train_dataset, val_dataset, test_dataset = prepare_train_dataset(root_dir=proj_root / "download", split_valid=True)
     train_loader, val_loader = prepare_train_val_dataloader(train_dataset, val_dataset, args)
 
     # use test
