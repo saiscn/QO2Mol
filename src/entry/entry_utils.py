@@ -15,7 +15,7 @@ import warnings
 import yaml
 from torch_geometric.loader import DataLoader
 
-from src.utils.qqtools import qDict
+from qqtools import qDict
 from src.utils.extraloss import L2MAELoss
 from src.utils.lr_scheduler import LRScheduler
 

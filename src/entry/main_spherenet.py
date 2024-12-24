@@ -15,8 +15,8 @@ import warnings
 import yaml
 from torch_geometric.loader import DataLoader
 
-proj_root = str(Path(__file__).parent.parent.parent.resolve())
-sys.path.insert(0, proj_root)
+proj_root = Path(__file__).parent.parent.parent.resolve()
+sys.path.insert(0, str(proj_root))
 
 from entry.entry_utils import (
     prepare_args,
@@ -30,7 +30,7 @@ from src.dataset.load_dataset import prepare_train_dataset
 from src.model.spherenet import SphereNet
 from src.trainer.ef_trainer import evaluate, train_one_epoch
 from src.utils import FileLogger
-from src.utils.qqtools import save_ckp, recover
+from qqtools import save_ckp, recover
 
 
 def freeze_rand(seed):
@@ -220,7 +220,7 @@ def main(args):
     """ Dataset """
     train_dataset, val_dataset, test_dataset = None, None, None
     train_loader, val_loader, test_loader = None, None, None
-    train_dataset, val_dataset, test_dataset = prepare_train_dataset(args=args, split_valid=True)
+    train_dataset, val_dataset, test_dataset = prepare_train_dataset(root_dir=proj_root / "download", split_valid=True)
     train_loader, val_loader = prepare_train_val_dataloader(train_dataset, val_dataset, args)
 
     # use test
