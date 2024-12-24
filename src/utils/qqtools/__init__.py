@@ -1,2 +1,3 @@
+from . import qdist
+from .checker import recover, save_ckp
 from .qdict import qDict
-from .checker import save_ckp, recover
